@@ -10,7 +10,7 @@ const client = new Client({
     ]
 });
 
-// Gagawa ng simpleng server para hindi mag-error o mag-sleep ang hosting platform mamaya
+// Gagawa ng simpleng server para hindi mag-error o mag-sleep ang Render
 const http = require('http');
 http.createServer((req, res) => {
     res.write("Gising Malala Bot is Active!");
@@ -20,7 +20,7 @@ http.createServer((req, res) => {
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     
-    // Kukuhain nito ang nilagay mong ID sa hosting settings
+    // Kukuhain nito ang nilagay mong ID sa Render Environment settings
     const channelId = process.env.VOICE_CHANNEL_ID;
     const channel = client.channels.cache.get(channelId);
     
@@ -41,5 +41,5 @@ client.once('ready', () => {
     }
 });
 
-// Gagamitin nito ang Token mo mula sa hosting settings para mag-online
+// Gagamitin nito ang Token mo mula sa Render para mag-online
 client.login(process.env.DISCORD_TOKEN);
