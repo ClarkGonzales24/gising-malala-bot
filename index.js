@@ -1,26 +1,31 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
+const http = require('http');
 
+// 1. Siguraduhing tama ang Intents para sa Discord Portal Settings mo ngayon
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent
     ]
 });
 
-// Gagawa ng simpleng server para hindi mag-error o mag-sleep ang Render
-const http = require('http');
+// 2. TAMA AT STABLE NA PORT BINDING PARA SA RENDER WEB SERVICE
+const PORT = process.env.PORT || 10000; 
 http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.write("Gising Malala Bot is Active!");
     res.end();
-}).listen(process.env.PORT || 3000);
+}).listen(PORT, '0.0.0.0', () => {
+    console.log(`Web server running and listening on port ${PORT}`);
+});
 
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     
-    // Kukuhain nito ang nilagay mong ID sa Render Environment settings
     const channelId = process.env.VOICE_CHANNEL_ID;
     const channel = client.channels.cache.get(channelId);
     
@@ -41,5 +46,5 @@ client.once('ready', () => {
     }
 });
 
-// Gagamitin nito ang Token mo mula sa Render para mag-online
+// 3. Login execution
 client.login(process.env.DISCORD_TOKEN);
