@@ -40,4 +40,4 @@ client.once('ready', () => {
 });
 
 // Gagamitin nito ang Token mo mula sa hosting settings para mag-online
-// client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.DISCORD_TOKEN);
